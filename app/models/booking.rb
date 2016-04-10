@@ -11,6 +11,7 @@ class Booking < ActiveRecord::Base
   enum status: ['pending', 'approved', 'rejected', 'borrowed', 'returned', 'delayed', 'void']
 
   after_create :set_status
+  after_save :add_deduct_quantity
 
   def set_status
     self.update_columns(status: 'pending')
@@ -32,7 +33,15 @@ class Booking < ActiveRecord::Base
     end
   end
 
-  def deduct_quantity
-    
+  def add_deduct_quantity
+    if status == 'borrowed'
+      total = self.equipment.quantity - quantity
+      Equipment.find(equipment_id).update_columns(quantity: total)
+    end
+
+    if status == 'returned'
+      total = self.equipment.quantity + quantity
+      Equipment.find(equipment_id).update_columns(quantity: total)
+    end
   end
 end
