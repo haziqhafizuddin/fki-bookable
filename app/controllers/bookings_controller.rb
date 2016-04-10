@@ -19,6 +19,7 @@ class BookingsController < ApplicationController
 
   def update
     if @booking.update(booking_params)
+      Notifier.received_booking(@booking).deliver!
       redirect_to booking_path(@booking), notice: 'Your booking is now pending'
     else
       render 'edit'
@@ -43,7 +44,7 @@ class BookingsController < ApplicationController
   def booking_params
     params.require(:booking).permit(:id, :user_id, :equipment_id,
                                     :start_time, :end_time, :quantity,
-                                    :lecturer_id)
+                                    :lecturer_id, :course)
   end
 
   def set_equipment
