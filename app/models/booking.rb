@@ -1,11 +1,12 @@
 class Booking < ActiveRecord::Base
   belongs_to :equipment
   belongs_to :user
+  belongs_to :lecturer
 
-  validates :user_id, :equipment_id, :quantity, presence: true
+  validates :user_id, :equipment_id, presence: true
   validates_presence_of :start_time, :end_time, on: :update
   validate :booking_time, on: :update
-  validates :quantity, numericality: { greater_than: 0 }
+  validate :check_quantity, on: :update
 
   enum status: ['pending', 'approved', 'rejected', 'borrowed', 'returned', 'delayed', 'void']
 
@@ -16,12 +17,18 @@ class Booking < ActiveRecord::Base
   end
 
   def booking_time
-    if start_time && start_time <= 1.hour.from_now
-      errors.add :start_time, 'Cannot book in less than one hour from now'
+    if start_time && start_time <= Date.current
+      errors.add :start_time, 'Cannot book in less than one day from now'
     end
 
     if end_time && end_time <= start_time
-      errors.add :base, 'Invalid start and end time'
+      errors.add :end_time, 'Cannot book less than start time'
+    end
+  end
+
+  def check_quantity
+    if quantity == nil
+      errors.add :quantity, 'Cannot be empty'
     end
   end
 

@@ -14,6 +14,7 @@ class BookingsController < ApplicationController
   end
 
   def edit
+    @lecturers = Lecturer.all
   end
 
   def update
@@ -41,7 +42,8 @@ class BookingsController < ApplicationController
 
   def booking_params
     params.require(:booking).permit(:id, :user_id, :equipment_id,
-                                    :start_time, :end_time)
+                                    :start_time, :end_time, :quantity,
+                                    :lecturer_id)
   end
 
   def set_equipment
