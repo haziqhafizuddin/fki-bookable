@@ -1,0 +1,6 @@
+<%= simple_form_for @booking do |f| %>
+  <%= f.input :start_time %>
+  <%= f.input :end_time %>
+  <%= f.input :quantity, collection: 1..@booking.equipment.quantity, prompt: 'Please select quantity' %>
+  <%= f.submit 'Submit booking' %>
+<% end %>

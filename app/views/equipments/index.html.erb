@@ -1,0 +1,21 @@
+<h1>Welcome to FKI Booking System</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Description</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+    <% @equipments.each do |equipment| %>
+      <tr>
+        <td><%= equipment.name %></td>
+        <td><%= equipment.description %></td>
+        <td><%= link_to 'Add Booking', new_booking_path(equipment_id: equipment) %></td>
+      </tr>
+    <% end %>
+  <tbody>
+    
+  </tbody>
+</table>

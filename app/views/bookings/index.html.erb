@@ -1,0 +1,30 @@
+<table>
+  <thead>
+    <tr>
+      <th>Equipment name</th>
+      <th>Start Time</th>
+      <th>End Time</th>
+      <th>Status</th>
+      <th>Action</th>
+    </tr>
+
+    <tbody>
+      <% @bookings.each do |booking| %>
+        <tr>
+          <td><%= booking.equipment.name %></td>
+          <td><%= booking.start_time%></td>
+          <td><%= booking.end_time%></td>
+          <td><%= booking.status%></td>
+          <td>
+            <% if booking.start_time.nil? %>
+              <%= link_to 'Update', edit_booking_path(booking) %>
+              <%#= link_to 'Cancel booking', cancel_booking_path(booking) %>
+            <% else %>
+              <%= link_to 'View', booking_path(booking) %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </thead>
+</table>
