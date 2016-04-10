@@ -12,7 +12,9 @@
       <tr>
         <td><%= equipment.name %></td>
         <td><%= equipment.description %></td>
-        <td><%= link_to 'Add Booking', new_booking_path(equipment_id: equipment) %></td>
+        <td>
+          <%= link_to 'Add Booking', new_booking_path(equipment_id: equipment) %>
+        </td>
       </tr>
     <% end %>
   <tbody>

@@ -4,8 +4,8 @@ Rails.application.routes.draw do
   mount RailsAdmin::Engine => '/admin', as: 'rails_admin'
   root 'equipments#index'
 
-  resources :equipments
-  resources :bookings do
+  resources :equipments, only: [:index]
+  resources :bookings, expect: [:destroy] do
     member do
       get 'cancel'
     end

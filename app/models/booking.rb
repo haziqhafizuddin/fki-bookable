@@ -11,7 +11,8 @@ class Booking < ActiveRecord::Base
   enum status: ['pending', 'approved', 'rejected', 'borrowed', 'returned', 'delayed', 'void']
 
   after_create :set_status
-  after_save :add_deduct_quantity
+  # after_save :add_deduct_quantity
+  validate :check_available_date, on: :update
 
   def set_status
     self.update_columns(status: 'pending')
@@ -42,6 +43,15 @@ class Booking < ActiveRecord::Base
     if status == 'returned'
       total = self.equipment.quantity + quantity
       Equipment.find(equipment_id).update_columns(quantity: total)
+    end
+  end
+
+  def check_available_date
+    booked = Booking.where(start_time: start_time).where(equipment_id: equipment_id).approved
+    booked_quantity = booked.collect { |a| a.quantity}.sum
+
+    if booked_quantity >= Equipment.find(equipment_id).quantity
+      errors.add :start_time, 'Equipment fully booked'
     end
   end
 end
