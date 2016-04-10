@@ -1,8 +1,19 @@
-<% if !user_signed_in? %>
-  <%= link_to 'Home', root_path %>
-  <%= link_to "Login/Signup", new_user_session_path %>
-<% else %>
-  <%= link_to 'Home', root_path %>
-  <%= link_to 'My booking', bookings_path %>
-  <%= link_to "Log Out", destroy_user_session_path, method: :delete%>
-<% end %>
+<div class="top-bar">
+  <div class="top-bar-left">
+    <ul class="dropdown menu" data-dropdown-menu>
+      <li class="menu-text">FKI BOOKING SYSTEM</li>
+    </ul>
+  </div>
+  <div class="top-bar-right">
+    <ul class="menu">
+      <% if !user_signed_in? %>
+        <li><%= link_to 'Home', root_path %></li>
+        <li><%= link_to "Login/Signup", new_user_session_path %></li>
+      <% else %>
+        <li><%= link_to 'Home', root_path %></li>
+        <li><%= link_to 'My booking', bookings_path %></li>
+        <li><%= link_to "Log Out", destroy_user_session_path, method: :delete%></li>
+      <% end %>
+    </ul>
+  </div>
+</div>

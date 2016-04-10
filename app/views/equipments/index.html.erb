@@ -1,23 +1,19 @@
-<h1>Welcome to FKI Booking System</h1>
+<div class="large-12 medium-12 small-12 columns">
+  <h1>List of Equipment at FKI</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Description</th>
-      <th>Action</th>
-    </tr>
-  </thead>
+  <div class="row">
     <% @equipments.each do |equipment| %>
-      <tr>
-        <td><%= equipment.name %></td>
-        <td><%= equipment.description %></td>
-        <td>
-          <%= link_to 'Add Booking', new_booking_path(equipment_id: equipment) %>
-        </td>
-      </tr>
+      <div class="large-4 medium-4 small-8 columns">
+        <%= image_tag equipment.try(:image) %> <br />
+        <div class="row">
+          <div class="large-8 medium-6 small-12 columns">
+            <%= equipment.name %>
+          </div>
+          <div class="large-4 medium-6 small-12 columns">
+            <%= link_to 'Book Now', new_booking_path(equipment_id: equipment), class: 'button small' %>
+          </div>
+        </div>
+      </div>
     <% end %>
-  <tbody>
-    
-  </tbody>
-</table>
+  </div>  
+</div>

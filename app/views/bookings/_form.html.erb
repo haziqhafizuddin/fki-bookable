@@ -1,8 +1,10 @@
-<%= simple_form_for @booking do |f| %>
-  <%= f.input :start_time, as: :date %>
-  <%= f.input :end_time, as: :date %>
-  <%= f.input :quantity, collection: 1..@booking.equipment.quantity, prompt: 'Please select quantity' %>
-  <%= f.input :lecturer_id, collection: @lecturers, prompt: 'Please select a Lecturer', label: 'Lecturer' %>
-  <%= f.input :course %>
-  <%= f.submit 'Submit booking' %>
-<% end %>
+<div class="large-12 medium-12 small-12 columns">
+  <%= simple_form_for @booking do |f| %>
+    <%= f.input :start_time, as: :date, input_html: { class: 'large-4 medium-6 small-12 columns' } %>
+    <%= f.input :end_time, as: :date, input_html: { class: 'large-4 medium-6 small-12 columns' } %>
+    <%= f.input :quantity, collection: 1..@booking.equipment.quantity, prompt: 'Please select quantity' %>
+    <%= f.input :lecturer_id, collection: @lecturers, prompt: 'Please select a Lecturer', label: 'Lecturer' %>
+    <%= f.input :course %>
+    <%= f.submit 'Submit booking', class: 'button small' %>
+  <% end %>
+</div>
