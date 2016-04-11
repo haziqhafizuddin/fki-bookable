@@ -37,6 +37,15 @@ group :development, :test do
   # gem 'byebug'
   gem 'pry'
   gem 'pry-rails'
+  gem 'rspec-rails'
+  gem 'faker'
+  gem 'shoulda-matchers', '~> 3.0'
+  gem 'reek'
+  gem 'rails_best_practices'
+  gem 'rubocop',require: false
+  gem 'factory_girl_rails'
+  gem 'database_cleaner'
+  gem 'capybara'
 end
 
 group :development do

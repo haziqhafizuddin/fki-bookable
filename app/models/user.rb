@@ -5,8 +5,5 @@ class User < ActiveRecord::Base
          :recoverable, :rememberable, :trackable, :validatable
 
   has_many :bookings
-  validates :email, presence: true
-  validates :password, presence: true
-  validates :name, presence: true
-  validates :matrix_no, presence: true
+  validates :email, :password, :name, :matrix_no, presence: true
 end
