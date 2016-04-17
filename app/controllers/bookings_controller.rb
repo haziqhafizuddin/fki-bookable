@@ -2,6 +2,7 @@ class BookingsController < ApplicationController
   before_action :authenticate_user!
   before_filter :set_booking, only: [:edit, :update, :show, :cancel]
   before_filter :set_equipment, only: [:new]
+  before_filter :set_lecturers, only: [:edit, :update]
 
   def index
     @bookings = Booking.where(user_id: current_user.id)
@@ -13,15 +14,15 @@ class BookingsController < ApplicationController
   end
 
   def edit
-    @lecturers = Lecturer.all
   end
 
   def update
+    # binding.pry
     if @booking.update(booking_params)
       Notifier.received_booking(@booking).deliver_now!
       redirect_to booking_path(@booking), notice: 'Your booking is now pending'
     else
-      render 'edit'
+      render :edit
     end
   end
 
@@ -38,6 +39,10 @@ class BookingsController < ApplicationController
 
   def set_booking
     @booking = Booking.find(params[:id])
+  end
+
+  def set_lecturers
+    @lecturers = Lecturer.all
   end
 
   def booking_params

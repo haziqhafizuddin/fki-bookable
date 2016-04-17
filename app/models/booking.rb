@@ -4,7 +4,7 @@ class Booking < ActiveRecord::Base
   belongs_to :lecturer
 
   validates :user_id, :equipment_id, presence: true
-  validates_presence_of :start_time, :end_time, on: :update
+  validates_presence_of :start_time, :end_time, :lecturer_id, on: :update
   validate :booking_time, on: :update
   validate :check_quantity, on: :update
 
@@ -47,10 +47,13 @@ class Booking < ActiveRecord::Base
   end
 
   def check_available_date
-    booked = Booking.where(start_time: start_time).where(equipment_id: equipment_id).approved
-    booked_quantity = booked.collect { |a| a.quantity}.sum
+    start_query = Booking.where(start_time: start_time, equipment_id: equipment_id).approved
+    end_query = Booking.where(end_time: end_time, equipment_id: equipment_id).approved
 
-    if booked_quantity >= Equipment.find(equipment_id).quantity
+    start_time_quantity = start_query.collect { |a| a.quantity}.sum
+    end_time_quantity = end_query.collect { |a| a.quantity}.sum
+
+    if start_time_quantity >= Equipment.find(equipment_id).quantity || end_time_quantity >= Equipment.find(equipment_id).quantity
       errors.add :start_time, 'Equipment fully booked'
     end
   end

@@ -4,12 +4,13 @@
   <div class="row">
     <% @equipments.each do |equipment| %>
       <div class="large-4 medium-4 small-8 columns">
-        <%= image_tag equipment.try(:image) %> <br />
+        <%= image_tag equipment.try(:image), class: 'thumbnail' %> <br />
         <div class="row">
-          <div class="large-8 medium-6 small-12 columns">
-            <%= equipment.name %>
+          <div class="large-12 medium-12 small-12 columns">
+            <%= equipment.name %><br>
+            <%= equipment.description %>
           </div>
-          <div class="large-4 medium-6 small-12 columns equipments_row">
+          <div class="large-12 medium-12 small-12 columns equipments_row">
             <%= link_to 'Book Now', new_booking_path(equipment_id: equipment), class: 'button small' %>
           </div>
         </div>
