@@ -17,7 +17,6 @@ class BookingsController < ApplicationController
   end
 
   def update
-    # binding.pry
     if @booking.update(booking_params)
       Notifier.received_booking(@booking).deliver_now!
       redirect_to booking_path(@booking), notice: 'Your booking is now pending'
